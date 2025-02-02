@@ -1,6 +1,6 @@
 import { prisma } from '../../lib/prisma.js'
 
-export async function getPaymentMethodById(id) {
+export async function getPaymentMethodById(id: string) {
     const paymentMethod = await prisma.paymentMethod.findUnique({
         where: {
             id

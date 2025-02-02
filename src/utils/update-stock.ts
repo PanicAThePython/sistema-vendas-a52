@@ -1,11 +1,12 @@
+import { FastifyRequest } from 'fastify'
 import { prisma } from '../../lib/prisma.js'
 import { getProductById } from './get-product-by-id.js'
 
-const calculateNewValueInStock = (actualQuantity, quantityToRemove) => {
+const calculateNewValueInStock = (actualQuantity: number, quantityToRemove: number) => {
     return actualQuantity - quantityToRemove
 }
 
-export async function updateStock(request) {
+export async function updateStock(request: any) {
     const { quantityToRemove, productId } = request.body
 
     const product = await getProductById(productId)

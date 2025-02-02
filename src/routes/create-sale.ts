@@ -7,12 +7,15 @@ import { getCustomerById } from '../utils/get-customer-by-id.js'
 import { getProductById } from '../utils/get-product-by-id.js'
 import { getPaymentMethodById } from '../utils/get-payment-by-id.js'
 
-const calculateTotal = (product, quantity) => {
+import { FastifyInstance } from 'fastify'
+import { ZodTypeProvider } from 'fastify-type-provider-zod'
+
+const calculateTotal = (product: any, quantity: number) => {
     return product.price * quantity
 }
 
-export async function createSale(app) {
-    app.post('/sale', {
+export async function createSale(app: FastifyInstance) {
+    app.withTypeProvider<ZodTypeProvider>().post('/sale', {
         schema: {
             body: z.object({
                 customerId: z.string().length(11),

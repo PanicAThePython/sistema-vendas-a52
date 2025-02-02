@@ -1,8 +1,10 @@
 import z from 'zod'
 import { prisma } from '../../lib/prisma.js'
+import { FastifyInstance } from 'fastify'
+import { ZodTypeProvider } from 'fastify-type-provider-zod'
 
-export async function getSalesFromCustomer(app) {
-    app.get('/sales/:customerId', {
+export async function getSalesFromCustomer(app: FastifyInstance) {
+    app.withTypeProvider<ZodTypeProvider>().get('/sales/:customerId', {
         schema: {
             params: z.object({
                 customerId: z.string().length(11)
