@@ -13,12 +13,16 @@ export async function createProduct(app) {
     }, async (request) => {
         const { name, quantity, price } = request.body
 
-        await prisma.product.create({
-            data: {
-                name,
-                quantityOf: quantity,
-                price
-            }
-        })
+        try{
+            await prisma.product.create({
+                data: {
+                    name,
+                    quantity_of: quantity,
+                    price
+                }
+            })
+        } catch (error) {
+            throw new Error("Could not create product, try again...")
+        }
     })
 }

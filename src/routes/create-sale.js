@@ -1,12 +1,21 @@
 import z from 'zod'
 import { prisma } from '../../lib/prisma.js'
+
 import { updateStock } from '../utils/update-stock.js'
+
+import { getCustomerById } from '../utils/get-customer-by-id.js'
+import { getProductById } from '../utils/get-product-by-id.js'
+import { getPaymentMethodById } from '../utils/get-payment-by-id.js'
+
+const calculateTotal = (product, quantity) => {
+    return product.price * quantity
+}
 
 export async function createSale(app) {
     app.post('/sale', {
         schema: {
             body: z.object({
-                customerId: z.string().uuid(),
+                customerId: z.string().length(11),
                 productId: z.string().uuid(),
                 quantityToRemove: z.number().int(),
                 paymentMethodId: z.string().uuid()
@@ -15,35 +24,29 @@ export async function createSale(app) {
     }, async (request) => {
         const { customerId, productId, quantityToRemove, paymentMethodId } = request.body
 
-        const product = await prisma.product.findUnique({
-            where: {
-                id: productId
-            }
-        })
-
-        const customer = await prisma.customer.findUnique({
-            where: {
-                id: customerId
-            }
-        })
-
-        const paymentMethod = await prisma.paymentMethod.findUnique({
-            where: {
-                id: paymentMethodId
-            }
-        })
+        const product = await getProductById(productId)
+        const customer = await getCustomerById(customerId)
+        const paymentMethod = await getPaymentMethodById(paymentMethodId)
 
         if (product && customer && paymentMethod){
-            await prisma.sale.create({
-                data: {
-                    customer_id: customerId,
-                    product_id: productId,
-                    quantity_of: quantityToRemove,
-                    payment_method_id: paymentMethodId
-                }
-            })
 
-            await updateStock(request)
+            const total = calculateTotal(product, quantityToRemove)
+
+            try {
+                await prisma.sale.create({
+                    data: {
+                        customer_id: customerId,
+                        product_id: productId,
+                        quantity_of: quantityToRemove,
+                        payment_method_id: paymentMethodId,
+                        total
+                    }
+                })
+
+                await updateStock(request)
+            } catch(error) {
+                throw new Error("Something went wrong when creating sale, try again...")
+            }
         }
     })
 }

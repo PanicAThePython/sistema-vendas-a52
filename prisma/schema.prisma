@@ -14,9 +14,8 @@ datasource db {
 }
 
 model Customer {
-  id String @id @default(uuid())
+  cpf String @id
   name String 
-  cpf String
   email String
   address String
 
@@ -47,7 +46,7 @@ model Sale {
   id String @id @default(uuid())
 
   customer_id String
-  customer Customer @relation(fields: [customer_id], references: [id])
+  customer Customer @relation(fields: [customer_id], references: [cpf])
 
   product_id String
   product Product @relation(fields: [product_id], references: [id])
@@ -56,6 +55,8 @@ model Sale {
 
   payment_method_id String
   payment_method PaymentMethod @relation(fields: [payment_method_id], references: [id])
+
+  total Float @default(0)
 
   created_at DateTime @default(now())
 

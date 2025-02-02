@@ -12,11 +12,15 @@ export async function createPaymentMethod(app) {
     }, async (request) => {
         const { name, installment } = request.body
 
-        await prisma.paymentMethod.create({
-            data: {
-                name,
-                installment
-            }
-        })
+        try{
+            await prisma.paymentMethod.create({
+                data: {
+                    name,
+                    installment
+                }
+            })
+        } catch (error) {
+            throw new Error("Could not create payment method, try again...")
+        }
     })
 }

@@ -14,13 +14,17 @@ export async function createCustomer(app) {
     }, async (request) => {
         const { name, cpf, email, address } = request.body
 
-        await prisma.customer.create({
-            data: {
-                name,
-                cpf,
-                email,
-                address
-            }
-        })
+        try {
+            await prisma.customer.create({
+                data: {
+                    name,
+                    cpf,
+                    email,
+                    address
+                }
+            })
+        } catch (error) {
+            throw new Error("Could not create customer, try again...")
+        }
     })
 }
