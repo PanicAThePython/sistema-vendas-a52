@@ -1,86 +1,21 @@
 # sistema-vendas-a52
-Teste prático de entrevista
 
-## routes
+## Stacks do projeto
 
-### CEP
+* Banco de Dados: PostgreSQL (com Docker);
+* Backend: NodeJS (fastify, zod, prisma) com TypeScript;
+* Frontend: ReactJS com MaterialUI e styled-components.
 
-* POST /cep - Register new address 
+## Como rodar?
 
-body:
-```
-{
-    "code": "89000000"
-    "state": "SC"
-    "city": "Blumenau"
-    "neighborhood": "Centro"
-    "street": "Rua XV"
-}
-```
+1. Vá até a raiz da pasta backend e execute `docker-compose up` para rodar o postgres (necessário ter o Docker instalado);
+2. Depois, ainda na raiz da pasta backend, execute `npm i` para instalar todas as dependências necessárias;
+3. Execute `npm start` para ativar o servidor;
+4. Para cadastrar cliente, cep, produtos, formas de pagamento, execute as rotas pelo postgres/insomnia ou, se preferir, rode no terminal `npx prisma studio` para visualizar as tabelas e cadastrar manualmente;
+**ATENÇÃO! - LEIA A DOCUMENTAÇÃO DAS ROTAS ANTES (dentro da pasta backend) !!**
+5. Agora, na raiz da pasta frontend, execute `npm i` para instalar todas as dependências;
+6. Rode `npm start` para subir o frontend.
 
-### Customers
+## Bônus - testes unitários no backend
 
-* POST /customer - Register new customer
-
-`IMPORTANT!` - To create a customer, it is necessary to exists addresses in the database
-
-body example:
-```
-{
-    "name": "John Doe"
-    "cpf": "12345678900"
-    "email": "john@doe.com"
-    "address_code": "8900000"
-}
-```
-
-* GET /customers - Get all customers
-
-### Products
-
-* POST /product - Register new product
-
-body:
-```
-{
-    "name": "Product 1"
-    "quantity_of": 216
-    "price": 18.90
-}
-```
-
-### Payment Methods
-
-* POST /paymentMethod - Register new payment method
-
-body:
-```
-{
-    "name": "Cartão de Crédito"
-    "installment": 10
-}
-```
-
-### Sales
-
-* POST /sale - Register new sale
-
-body:
-```
-{
-    customerId: "12345678900",
-    productId: (get uuid from database),
-    quantityToRemove: 32,
-    paymentMethodId: (get uuid from database)
-    total: (comes from frontend => quantityToRemove * product price)
-}
-```
-
-* GET /sales - Get all sales
-
-* GET /sales/:customerId - Get all sales from a customer
-
-params:
-```
-    customerId: 12345678900
-```
+Execute `npm test` para rodar os testes.
