@@ -13,11 +13,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Cep {
+  code String @id
+  state String 
+  city String
+  neighborhood String
+  street String 
+
+  customers Customer[]
+  @@map("ceps") 
+}
+
 model Customer {
   cpf String @id
-  name String 
+  name String
   email String
-  address String
+
+  address_code String @default("")
+  address Cep @relation(fields: [address_code], references: [code])
 
   sales Sale[]
   @@map("customers")

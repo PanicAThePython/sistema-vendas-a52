@@ -1,4 +1,4 @@
-import { prisma } from '../../lib/prisma.js'
+import { prisma } from '../../lib/prisma'
 
 export async function getPaymentMethodById(id: string) {
     const paymentMethod = await prisma.paymentMethod.findUnique({

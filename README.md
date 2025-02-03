@@ -3,17 +3,34 @@ Teste prático de entrevista
 
 ## routes
 
-### Customers
+### CEP
 
-* POST /customer - Register new customer
+* POST /cep - Register new address 
 
 body:
 ```
 {
-    name: string
-    cpf: string (unique)
-    email: string
-    address: string
+    "code": "89000000"
+    "state": "SC"
+    "city": "Blumenau"
+    "neighborhood": "Centro"
+    "street": "Rua XV"
+}
+```
+
+### Customers
+
+* POST /customer - Register new customer
+
+`IMPORTANT!` - To create a customer, it is necessary to exists addresses in the database
+
+body example:
+```
+{
+    "name": "John Doe"
+    "cpf": "12345678900"
+    "email": "john@doe.com"
+    "address_code": "8900000"
 }
 ```
 
@@ -26,9 +43,9 @@ body:
 body:
 ```
 {
-    name: string
-    quantity_of: integer
-    price: float
+    "name": "Product 1"
+    "quantity_of": 216
+    "price": 18.90
 }
 ```
 
@@ -39,8 +56,8 @@ body:
 body:
 ```
 {
-    name: string
-    installment: integer
+    "name": "Cartão de Crédito"
+    "installment": 10
 }
 ```
 
@@ -51,10 +68,11 @@ body:
 body:
 ```
 {
-    customerId: string,
-    productId: string,
-    quantityToRemove: integer,
-    paymentMethodId: string
+    customerId: "12345678900",
+    productId: (get uuid from database),
+    quantityToRemove: 32,
+    paymentMethodId: (get uuid from database)
+    total: (comes from frontend => quantityToRemove * product price)
 }
 ```
 
@@ -64,5 +82,5 @@ body:
 
 params:
 ```
-    customerId: string
+    customerId: 12345678900
 ```

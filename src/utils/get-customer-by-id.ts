@@ -1,4 +1,4 @@
-import { prisma } from '../../lib/prisma.js'
+import { prisma } from '../../lib/prisma'
 
 export async function getCustomerById(id: string) {
     const customer = await prisma.customer.findUnique({
