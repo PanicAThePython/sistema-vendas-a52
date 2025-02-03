@@ -4,6 +4,7 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 
 interface PaymentMethodType {
+    id?: string
     name: string
     installment: number
 }

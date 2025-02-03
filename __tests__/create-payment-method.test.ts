@@ -9,8 +9,5 @@ test("should create new payment method", () => {
     }
 
     prismaMock.paymentMethod.create.mockResolvedValue(paymentMethod)
-
-    const result = expect(registerPaymentMethod(paymentMethod)).resolves
-    result.toHaveProperty("name")
-    result.toHaveProperty("installment")
+    expect(registerPaymentMethod(paymentMethod)).resolves.toBe(paymentMethod)
 })

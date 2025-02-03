@@ -4,16 +4,17 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 
 interface ProductType {
+    id?: string
     name: string
-    quantity: number
+    quantity_of: number
     price: number
 }
 
-export const registerProduct = async({ name, quantity, price }: ProductType) => {
+export const registerProduct = async({ name, quantity_of, price }: ProductType) => {
     return await prisma.product.create({
         data: {
             name,
-            quantity_of: quantity,
+            quantity_of,
             price
         }
     })
@@ -32,7 +33,7 @@ export async function createProduct(app: FastifyInstance) {
         const { name, quantity, price } = request.body
 
         try{
-            await registerProduct({ name, quantity, price })
+            await registerProduct({ name, quantity_of: quantity, price })
         } catch (error) {
             throw new Error("Could not create product, try again...")
         }
