@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "sales" ADD COLUMN     "total" INTEGER NOT NULL DEFAULT 0;
