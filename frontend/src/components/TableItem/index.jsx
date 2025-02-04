@@ -2,26 +2,8 @@ import { FormControl, MenuItem, Paper, Select, Table, TableBody, TableCell, Tabl
 import { useEffect, useState } from "react"
 import { CustomButton } from "./style"
 
-export const TableItem = () => {
-
-    const items = [{
-        "id": 1,
-        "name": "produto 1",
-        "price": 18.9,
-        "quantity": 10,
-    },
-    {
-        "id": 2,
-        "name": "produto 2",
-        "price": 22.53,
-        "quantity": 11
-    },
-    {
-        "id": 3,
-        "name": "produto 3",
-        "price": 54.9,
-        "quantity": 3
-    }]
+export const TableItem = (props) => {
+    const { products } = props
 
     const [indexSelected, setIndexSelected] = useState(0)
     const [quantity, setQuantity] = useState(0)
@@ -53,19 +35,19 @@ export const TableItem = () => {
                                     displayEmpty
                                 >
                                     {
-                                        items.map(({ name }, index) => (
+                                        products["products"].map(({ name }, index) => (
                                             <MenuItem value={index}>{name}</MenuItem>
                                         ))
                                     }
                                 </Select>
                             </FormControl>
                         </TableCell>
-                        <TableCell>{items[indexSelected].price}</TableCell>
+                        <TableCell>{products["products"][indexSelected].price}</TableCell>
                         <TableCell>
                             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                 <CustomButton onClick={() => {
                                     setQuantity(quantity-1)
-                                    setTotal((quantity-1) * items[indexSelected].price)
+                                    setTotal((quantity-1) * products["products"][indexSelected].price)
                                 }} 
                                 disabled={quantity===0}
                                 >
@@ -74,9 +56,9 @@ export const TableItem = () => {
                                 <Typography>{quantity}</Typography>
                                 <CustomButton onClick={() => {
                                     setQuantity(quantity+1)
-                                    setTotal((quantity+1) * items[indexSelected].price)
+                                    setTotal((quantity+1) * products["products"][indexSelected].price)
                                 }} 
-                                disabled={quantity === items[indexSelected].quantity}
+                                disabled={quantity === products["products"][indexSelected].quantity_of}
                                 >
                                     +
                                 </CustomButton>

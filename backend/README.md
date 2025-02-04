@@ -10,10 +10,10 @@ Teste prático de entrevista
 body:
 ```
 {
-    "code": "89000000"
-    "state": "SC"
-    "city": "Blumenau"
-    "neighborhood": "Centro"
+    "code": "89000000",
+    "state": "SC",
+    "city": "Blumenau",
+    "neighborhood": "Centro",
     "street": "Rua XV"
 }
 ```
@@ -34,9 +34,9 @@ params:
 body:
 ```
 {
-    "name": "John Doe"
-    "cpf": "12345678900"
-    "email": "john@doe.com"
+    "name": "John Doe",
+    "cpf": "12345678900",
+    "email": "john@doe.com",
     "address_code": "8900000"
 }
 ```
@@ -50,8 +50,8 @@ body:
 body:
 ```
 {
-    "name": "Product 1"
-    "quantity_of": 216
+    "name": "Product 1",
+    "quantity": 216,
     "price": 18.90
 }
 ```
@@ -65,7 +65,7 @@ body:
 body:
 ```
 {
-    "name": "Cartão de Crédito"
+    "name": "Cartão de Crédito",
     "installment": 10
 }
 ```
@@ -80,7 +80,7 @@ body:
     customerId: "12345678900",
     productId: (get uuid from database),
     quantityToRemove: 32,
-    paymentMethodId: (get uuid from database)
+    paymentMethodId: (get uuid from database),
     total: (comes from frontend => quantityToRemove * product price)
 }
 ```

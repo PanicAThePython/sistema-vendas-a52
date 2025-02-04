@@ -1,19 +1,9 @@
 import { FormControl, MenuItem, Select, Typography } from "@mui/material"
-import { useState } from "react";
+import { useState } from "react"
 
-export const PaymentMethodsSection = () => {
-    const [value, setValue] = useState(1)
-
-    const payments = [{
-        "id": 1,
-        "name": "Cartão de Crédito",
-        "installment": 10
-    },
-    {
-        "id": 2,
-        "name": "Cartão de Débito",
-        "installment": 1
-    }]
+export const PaymentMethodsSection = (props) => {
+    const payments = props.data["payments"]
+    const [value, setValue] = useState(payments[0].id)
 
     return (
         <FormControl>

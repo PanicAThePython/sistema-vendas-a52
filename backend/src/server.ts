@@ -13,6 +13,7 @@ import { getAllProducts } from "./routes/get-all-products"
 import { getAddress } from "./routes/get-address"
 
 import cors from "@fastify/cors"
+import { getAllPaymentMethods } from "./routes/get-all-payment-methods"
 
 export const app = Fastify()
 await app.register(cors, {})
@@ -27,6 +28,7 @@ app.register(createPaymentMethod)
 app.register(createSale)
 
 app.register(getAllProducts)
+app.register(getAllPaymentMethods)
 app.register(getAllCustomers)
 app.register(getAllSales)
 

@@ -7,7 +7,7 @@ export async function getAddress(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>().get('/cep/:code', {
         schema: {
              params: z.object({
-                code: z.string().length(11)
+                code: z.string().length(8)
             })
         }
     },
