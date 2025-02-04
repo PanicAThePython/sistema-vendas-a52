@@ -1,4 +1,4 @@
-import { FormControl, MenuItem, Select } from "@mui/material"
+import { FormControl, MenuItem, Select, Typography } from "@mui/material"
 import { useState } from "react";
 
 export const PaymentMethodsSection = () => {
@@ -16,7 +16,8 @@ export const PaymentMethodsSection = () => {
     }]
 
     return (
-        <FormControl fullWidth>
+        <FormControl>
+            <Typography variant="body1">Selecione a forma de pagamento:</Typography>
             <Select
                 value={value}
                 onChange={(e) => {
