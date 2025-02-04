@@ -1,4 +1,4 @@
-import fastify from "fastify"
+import Fastify from "fastify"
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod"
 
 import { createCustomer } from "./routes/create-customer"
@@ -9,8 +9,13 @@ import { getAllCustomers } from "./routes/get-all-customers"
 import { getSalesFromCustomer } from "./routes/get-sales-from-customer"
 import { getAllSales } from "./routes/get-all-sales"
 import { createCep } from "./routes/create-cep"
+import { getAllProducts } from "./routes/get-all-products"
+import { getAddress } from "./routes/get-address"
 
-export const app = fastify()
+import cors from "@fastify/cors"
+
+export const app = Fastify()
+await app.register(cors, {})
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
@@ -21,8 +26,11 @@ app.register(createProduct)
 app.register(createPaymentMethod)
 app.register(createSale)
 
+app.register(getAllProducts)
 app.register(getAllCustomers)
 app.register(getAllSales)
+
+app.register(getAddress)
 app.register(getSalesFromCustomer)
 
 app.listen({ port: 3333 }).then(() => {

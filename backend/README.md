@@ -18,13 +18,20 @@ body:
 }
 ```
 
+* GET /cep/:code - Get address by CEP code
+
+params:
+```
+    code: 89000111
+```
+
 ### Customers
 
 * POST /customer - Register new customer
 
 `IMPORTANT!` - To create a customer, it is necessary to exists addresses in the database
 
-body example:
+body:
 ```
 {
     "name": "John Doe"
@@ -48,6 +55,8 @@ body:
     "price": 18.90
 }
 ```
+
+* GET /products - Get all products
 
 ### Payment Methods
 
