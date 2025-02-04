@@ -1,6 +1,6 @@
-import { Button, FormControl, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { FormControl, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
-import styled from "styled-components"
+import { CustomButton } from "./style"
 
 export const TableItem = () => {
 
@@ -26,12 +26,6 @@ export const TableItem = () => {
     const [indexSelected, setIndexSelected] = useState(0)
     const [quantity, setQuantity] = useState(0)
     const [total, setTotal] = useState(0)
-
-    const CustomButton = styled(Button)`
-        border-radius: 50%;
-        width: 10px;
-        height: 10px;
-    `
 
     useEffect(() => {
         setTotal(0)

@@ -1,15 +1,7 @@
 import { Typography } from "@mui/material"
-import styled from "styled-components"
 import { PaymentMethodsSection } from "../PaymentMethodsSection"
 import { CEPSection } from "../CEPSection"
-
-
-const AsideCustom = styled.aside`
-    width: 450px;
-    padding: 20px;
-    padding-right: 0px;
-    text-align: left;
-`
+import { AsideCustom } from "./style"
 
 export const SaleInfoSection = () => {
     return (
