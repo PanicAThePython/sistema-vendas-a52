@@ -5,7 +5,7 @@ Teste prático de entrevista
 
 ### CEP
 
-* POST /cep - Register new address 
+* POST /cep - Cadastra novo endereço
 
 body:
 ```
@@ -18,7 +18,7 @@ body:
 }
 ```
 
-* GET /cep/:code - Get address by CEP code
+* GET /cep/:code - Pega endereço pelo CEP
 
 params:
 ```
@@ -27,9 +27,9 @@ params:
 
 ### Customers
 
-* POST /customer - Register new customer
+* POST /customer - Cadastra novo consumidor
 
-`IMPORTANT!` - To create a customer, it is necessary to exists addresses in the database
+`IMPORTANT!` - Para criar um consumidor, é necessário que o endereço dele exista no banco de dados.
 
 body:
 ```
@@ -41,11 +41,11 @@ body:
 }
 ```
 
-* GET /customers - Get all customers
+* GET /customers - Pega todos os consumidores
 
 ### Products
 
-* POST /product - Register new product
+* POST /product - Cadastra novo produto
 
 body:
 ```
@@ -56,11 +56,11 @@ body:
 }
 ```
 
-* GET /products - Get all products
+* GET /products - Pega todos os produtos
 
 ### Payment Methods
 
-* POST /paymentMethod - Register new payment method
+* POST /paymentMethod - Cadastra nova forma de pagamento
 
 body:
 ```
@@ -72,7 +72,7 @@ body:
 
 ### Sales
 
-* POST /sale - Register new sale
+* POST /sale - Cadastra nova compra
 
 body:
 ```
@@ -85,9 +85,9 @@ body:
 }
 ```
 
-* GET /sales - Get all sales
+* GET /sales - Pega todas as compras
 
-* GET /sales/:customerId - Get all sales from a customer
+* GET /sales/:customerId - Pega as compras de um determinado consumidor
 
 params:
 ```
