@@ -20,4 +20,10 @@ const HeaderCustom = styled.header`
     width: 140%;
   }
 `
-export { HeaderCustom, MainCustom }
+
+const CustomDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+`
+export { HeaderCustom, MainCustom, CustomDiv }

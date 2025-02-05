@@ -1,8 +1,9 @@
 import { Button, TextField, Typography } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { api } from "../../services/api"
 
-export const CEPSection = () => {
+export const CEPSection = (props) => {
+    const { restart } = props
     const [cep, setCep] = useState("")
     const [address, setAddress] = useState(null)
     const [error, setError] = useState(null)
@@ -14,6 +15,11 @@ export const CEPSection = () => {
             setError("CEP não cadastrado ou inválido")
         })
     }
+
+    useEffect(() => {
+        setAddress(null)
+        setError(null)
+    }, [restart])
 
     return (
         <div>
@@ -27,11 +33,12 @@ export const CEPSection = () => {
                     <Typography variant="overline" lineHeight={2}>
                         {address.street}, {address.neighborhood}, {address.city}, {address.state}, {address.code}
                     </Typography>
-                ) : (error) ? (<div>{error}</div>): (
+                ) : (error) ? (
+                    <Typography variant="overline" lineHeight={2}>{error}</Typography>
+                ) : (
                     <div style={{height: "20px"}}></div>
                 )
             }
-            
         </div>
     )
 }

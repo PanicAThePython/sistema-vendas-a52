@@ -4,13 +4,17 @@ import { CEPSection } from "../CEPSection"
 import { AsideCustom } from "./style"
 
 export const SaleInfoSection = (props) => {
-    const {customer, payments, selectPaymentMethod} = props
+    const {customer, payments, selectPaymentMethod, restart} = props
 
     return (
         <AsideCustom>
             <Typography variant="h6">Olá, {customer[0].name}!</Typography>
-            <CEPSection/>
-            <PaymentMethodsSection data={payments} selectPaymentMethod={selectPaymentMethod}/>
+            <CEPSection restart={restart}/>
+            <PaymentMethodsSection
+                restart={restart}
+                payments={payments}
+                selectPaymentMethod={selectPaymentMethod}
+            />
         </AsideCustom>
     )
 }

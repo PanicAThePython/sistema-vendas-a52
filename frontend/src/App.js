@@ -1,8 +1,8 @@
 import { SaleInfoSection } from './components/SaleInfoSection'
 import { Button, CircularProgress, IconButton, Snackbar, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { TableItem } from './components/TableItem'
-import { HeaderCustom, MainCustom } from './style/style'
+import { Cart } from './components/Cart'
+import { HeaderCustom, MainCustom, CustomDiv } from './style/style'
 import { Fragment, useEffect, useState } from "react"
 import { api } from "./services/api"
 
@@ -12,6 +12,7 @@ const App = () => {
   const [payments, setPayments] = useState(null)
 
   const [loaded, setLoaded] = useState(false)
+  const [restart, setRestart] = useState(false)
 
   const [paymentMethodSelectedId, setPaymentMethodSelectedId] = useState(null)
   const [productSelectedId, setProductSelectedId] = useState(null)
@@ -19,7 +20,7 @@ const App = () => {
   const [productSelectedQuantity, setProductSelectedQuantity] = useState(null)
   const [total, setTotal] = useState(null)
 
-  const [successMessage, setSuccessMessage] = useState(null)
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     if (!customer) {
@@ -27,12 +28,12 @@ const App = () => {
         setCustomer(response.data["customers"])
         if (!products) {
           api.get("/products").then((response) => {
-            setProducts(response.data)
-			setProductSelectedId(response.data["products"][0].id)
+            setProducts(response.data["products"])
+			      setProductSelectedId(response.data["products"][0].id)
             if (!payments) {
               api.get("/payments").then((response) => {
-                setPayments(response.data)
-				setPaymentMethodSelectedId(response.data["payments"][0].id)
+                setPayments(response.data["payments"])
+				        setPaymentMethodSelectedId(response.data["payments"][0].id)
                 setLoaded(true)
               }).catch((e) => {
                 console.error(e)
@@ -48,6 +49,13 @@ const App = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (productSelectedId !== null && paymentMethodSelectedId != null){
+      setProductSelectedId(products[0].id)
+      setPaymentMethodSelectedId(payments[0].id)
+    }
+  }, [restart])
+
   const handleClick = () => {
     api.post('/sale', 
 		{
@@ -57,18 +65,19 @@ const App = () => {
 			paymentMethodId: paymentMethodSelectedId,
 			total: total
 		}
-	).then(() => {
-		setSuccessMessage("Compra finalizada com sucesso!")
-    }).catch((error) => console.error(error))
+	  ).then(() => {
+      setMessage("Compra finalizada com sucesso!")
+      setRestart(!restart)
+    })
+    .catch(() => setMessage("Houve um problema com a compra, tente novamente..."))
   }
 
   const action = (
     <Fragment>
       <IconButton
         size="small"
-        aria-label="close"
         color="inherit"
-        onClick={() => setSuccessMessage(null)}
+        onClick={() => setMessage(null)}
       >
         <CloseIcon fontSize="small" />
       </IconButton>
@@ -82,39 +91,41 @@ const App = () => {
       	<HeaderCustom/>
       	<MainCustom>
         	<SaleInfoSection
-				customer={customer}
-				payments={payments}
-				selectPaymentMethod={(id) => setPaymentMethodSelectedId(id)}
-			/>
-			<div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-				<Typography variant='h5' margin={'20px'}>
-					Resumo da Compra
-				</Typography>
-				<TableItem
-					products={products}
-					selectProduct={(id) => setProductSelectedId(id)}
-					setQuantitySale={(value) => setProductSelectedQuantity(value)}
-					setTotalSale={(value) => setTotal(value)}
-				/>
-			</div>
+            restart={restart}
+            customer={customer}
+            payments={payments}
+            selectPaymentMethod={(id) => setPaymentMethodSelectedId(id)}
+          />
+          <CustomDiv>
+            <Typography variant='h5' margin={'20px'}>
+              Resumo da Compra
+            </Typography>
+            <Cart
+              restart={restart}
+              products={products}
+              selectProduct={(id) => setProductSelectedId(id)}
+              setQuantitySale={(value) => setProductSelectedQuantity(value)}
+              setTotalSale={(value) => setTotal(value)}
+            />
+          </CustomDiv>
       	</MainCustom>
-		<footer>
-			<Button
-				variant='contained'
-				style={{ width: '300px', height: '70px', fontSize: '18px', marginLeft: '70px'}}
-				onClick={handleClick}
-				disabled={productSelectedQuantity===0}
-			>
-				Finalizar compra
-			</Button>
-			<Snackbar
-				open={(successMessage !== null)}
-				autoHideDuration={5000}
-				onClose={() => setSuccessMessage(null)}
-				message={successMessage}
-				action={action}
-			/>
-		</footer>
+        <footer>
+          <Button
+            variant='contained'
+            style={{ width: '300px', height: '70px', fontSize: '18px', marginLeft: '70px'}}
+            onClick={handleClick}
+            disabled={productSelectedQuantity===0}
+          >
+            Finalizar compra
+          </Button>
+          <Snackbar
+            open={(message !== null)}
+            autoHideDuration={5000}
+            onClose={() => setMessage(null)}
+            message={message}
+            action={action}
+          />
+        </footer>
     </div>
   )
 }

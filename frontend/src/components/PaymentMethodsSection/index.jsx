@@ -1,10 +1,17 @@
 import { FormControl, MenuItem, Select, Typography } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export const PaymentMethodsSection = (props) => {
-    const payments = props.data["payments"]
-    const { selectPaymentMethod } = props
-    const [value, setValue] = useState(payments[0].id)
+    const { selectPaymentMethod, payments, restart } = props
+    const [value, setValue] = useState("")
+
+    useEffect(() => {
+        if (payments.length > 0) setValue(payments[0].id)
+    }, [])
+
+    useEffect(() => {
+        if (payments.length > 0) setValue(payments[0].id)
+    }, [restart])
 
     return (
         <FormControl>
@@ -18,13 +25,13 @@ export const PaymentMethodsSection = (props) => {
                 displayEmpty
             >
                 {
-                    (payments.length > 0) ? (
+                    (payments.length > 0) && (
                         payments.map((payment) => (
                             <MenuItem key={payment.id} value={payment.id}>
                                 {payment.installment}x no {payment.name}
                             </MenuItem>
                         ))
-                    ) : (<></>)
+                    )
                 }
             </Select>
         </FormControl>
