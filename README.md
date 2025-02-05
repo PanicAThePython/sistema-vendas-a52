@@ -21,4 +21,5 @@
 ## Bônus
 
 * Testes unitários: execute `npm test` na raiz da pasta backend para rodar os testes.
+    * ATENÇÃO! Rodar os testes cria instâncias no banco de dados.   
 * Filtro de venda por cliente: seção Sales da documentação backend.
