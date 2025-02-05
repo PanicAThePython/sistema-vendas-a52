@@ -50,10 +50,11 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if (productSelectedId !== null && paymentMethodSelectedId != null){
-      setProductSelectedId(products[0].id)
-      setPaymentMethodSelectedId(payments[0].id)
-    }
+    api.get("/products").then((response) => {
+      setProducts(response.data["products"])
+    }).catch((e) => {
+      console.error(e)
+    })
   }, [restart])
 
   const handleClick = () => {
